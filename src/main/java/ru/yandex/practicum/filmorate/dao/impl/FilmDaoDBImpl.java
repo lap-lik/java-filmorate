@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.dao.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -21,7 +20,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Repository(value = "filmDB")
+@Repository
 @RequiredArgsConstructor
 public class FilmDaoDBImpl implements FilmDao {
     public static final String SAVE_FILM = "INSERT INTO films (name, description, release_date, duration, mpa_id) " +
@@ -58,12 +57,6 @@ public class FilmDaoDBImpl implements FilmDao {
             "FROM films " +
             "WHERE id = ?";
     public static final String IS_EXIST_FILM_BY_ID = "SELECT EXISTS (SELECT 1 FROM films WHERE id = ?)";
-    public static final String ADD_LIKE = "INSERT INTO likes (film_id, user_id) " +
-            "VALUES (?, ?)";
-    public static final String DELETE_LIKE = "DELETE " +
-            "FROM likes " +
-            "WHERE film_id = ? " +
-            "  AND user_id = ?";
     public static final String ADD_LINKS_FILM_GENRE = "INSERT INTO film_genre (film_id, genre_id) " +
             "VALUES (?, ?)";
     public static final String DELETE_LINKS_FILM_GENRE = "DELETE " +
@@ -148,28 +141,9 @@ public class FilmDaoDBImpl implements FilmDao {
     }
 
     @Override
-    public boolean addLike(Long filmId, Long userId) {
-
-        try {
-            jdbcTemplate.update(ADD_LIKE, filmId, userId);
-            return true;
-        } catch (DuplicateKeyException exception) {
-            return false;
-        }
-    }
-
-    @Override
     public List<Film> findPopularFilms(int count) {
 
         return jdbcTemplate.query(FIND_POPULAR_FILMS, this::mapRowToFilm, count);
-    }
-
-    @Override
-    public boolean deleteLike(Long filmId, Long userId) {
-
-        int likeDeleted = jdbcTemplate.update(DELETE_LIKE, filmId, userId);
-
-        return likeDeleted > 0;
     }
 
     private void addLinksFilmGenre(Film film) {

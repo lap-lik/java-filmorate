@@ -14,15 +14,6 @@ import java.util.List;
 public interface UserDao extends GenericDao<User, Long> {
 
     /**
-     * Adds a friend to the user with the specified user ID.
-     *
-     * @param userId   The ID of the user.
-     * @param friendId The ID of the friend to be added.
-     * @return true if the friend is added successfully, false otherwise.
-     */
-    boolean addFriend(final Long userId, final Long friendId);
-
-    /**
      * Retrieves a list of all friends for a user with the specified user ID.
      *
      * @param userId The ID of the user.
@@ -38,13 +29,4 @@ public interface UserDao extends GenericDao<User, Long> {
      * @return A list of User objects representing the common friends.
      */
     List<User> findCommonFriends(final Long userId, final Long otherId);
-
-    /**
-     * Deletes a friend from the user with the specified user ID.
-     *
-     * @param userId   The ID of the user.
-     * @param friendId The ID of the friend to be deleted.
-     * @return true if the friend is deleted successfully, false otherwise.
-     */
-    boolean deleteFriend(final Long userId, final Long friendId);
 }

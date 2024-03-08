@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.dto.FilmDTO;
 import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.service.LikeService;
 
 import javax.validation.constraints.Positive;
 import java.util.List;
@@ -19,7 +20,8 @@ import static ru.yandex.practicum.filmorate.constant.FilmConstant.COUNT_OF_POPUL
 @RequiredArgsConstructor
 @RequestMapping("/films")
 public class FilmController {
-    private final FilmService service;
+    private final FilmService filmService;
+    private final LikeService likeService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -27,7 +29,7 @@ public class FilmController {
 
         log.info("START endpoint `method:POST /films` (create film), request: {}.", filmDTO.getName());
 
-        return service.create(filmDTO);
+        return filmService.create(filmDTO);
     }
 
     @GetMapping("/{id}")
@@ -35,7 +37,7 @@ public class FilmController {
 
         log.info("START endpoint `method:GET /films/{id}` (get film by id), film id: {}.", id);
 
-        return service.getById(id);
+        return filmService.getById(id);
     }
 
     @GetMapping
@@ -43,7 +45,7 @@ public class FilmController {
 
         log.info("START endpoint `method:GET /films` (get all films).");
 
-        return service.getAll();
+        return filmService.getAll();
     }
 
     @PutMapping
@@ -51,7 +53,7 @@ public class FilmController {
 
         log.info("START endpoint `method:PUT /films` (update film), request: {}.", filmDTO.getName());
 
-        return service.update(filmDTO);
+        return filmService.update(filmDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -59,7 +61,7 @@ public class FilmController {
     public void deleteFilmById(@PathVariable Long id) {
 
         log.info("START endpoint `method:DELETE /films/{id}` (delete film by id), film id: {}.", id);
-        service.deleteById(id);
+        filmService.deleteById(id);
     }
 
     @PutMapping("/{id}/like/{userId}")
@@ -67,7 +69,7 @@ public class FilmController {
 
         log.info("START endpoint `method:PUT /films/{id}/like/{userId}` (add like to film), " +
                 "film id: {}, user id: {}.", id, userId);
-        service.likeFilm(id, userId);
+        likeService.likeFilm(id, userId);
     }
 
     @GetMapping("/popular")
@@ -77,7 +79,7 @@ public class FilmController {
         log.info("START endpoint `method:GET /films/popular` (get must popular films), " +
                 "count films: {}.", count);
 
-        return service.getPopularFilms(count);
+        return filmService.getPopularFilms(count);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
@@ -86,6 +88,6 @@ public class FilmController {
 
         log.info("START endpoint `method:DELETE /films/{id}/like/{userId}` (delete like from film), " +
                 "film id: {}, user id: {}.", id, userId);
-        service.deleteLike(id, userId);
+        likeService.deleteLike(id, userId);
     }
 }
