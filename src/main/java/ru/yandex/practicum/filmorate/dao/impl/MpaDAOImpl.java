@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.filmorate.dao.MpaDao;
+import ru.yandex.practicum.filmorate.dao.MpaDAO;
 import ru.yandex.practicum.filmorate.exception.SQLDataAccessException;
 import ru.yandex.practicum.filmorate.model.Mpa;
 
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class MpaDaoDBImpl implements MpaDao {
+public class MpaDAOImpl implements MpaDAO {
     public static final String SAVE_MPA = "INSERT INTO mpa (name) " +
             "VALUES (?)";
     public static final String FIND_MPA_RATINGS = "SELECT * " +

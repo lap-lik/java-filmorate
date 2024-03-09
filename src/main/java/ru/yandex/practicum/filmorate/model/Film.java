@@ -16,6 +16,6 @@ public class Film {
     private LocalDate releaseDate;
     private Integer duration;
     private Mpa mpa;
-    private Set<Long> likedUserIds;
     private Set<Genre> genres;
+    private Set<Director> directors;
 }

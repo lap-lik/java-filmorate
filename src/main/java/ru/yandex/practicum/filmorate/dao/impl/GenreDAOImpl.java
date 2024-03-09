@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.filmorate.dao.GenreDao;
+import ru.yandex.practicum.filmorate.dao.GenreDAO;
 import ru.yandex.practicum.filmorate.exception.SQLDataAccessException;
 import ru.yandex.practicum.filmorate.model.Genre;
 
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class GenreDaoDBImpl implements GenreDao {
+public class GenreDAOImpl implements GenreDAO {
     public static final String SAVE_GENRE = "INSERT INTO genres (name) " +
             "VALUES (?)";
     public static final String FIND_GENRES = "SELECT * " +

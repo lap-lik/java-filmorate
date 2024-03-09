@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
-import ru.yandex.practicum.filmorate.dao.FilmDao;
-import ru.yandex.practicum.filmorate.dao.UserDao;
+import ru.yandex.practicum.filmorate.dao.FilmDAO;
+import ru.yandex.practicum.filmorate.dao.UserDAO;
 import ru.yandex.practicum.filmorate.exception.SQLDataAccessException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
@@ -30,8 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class FilmDaoDBImplTest {
     private final JdbcTemplate jdbcTemplate;
-    private FilmDao filmDao;
-    private UserDao userDao;
+    private FilmDAO filmDao;
+    private UserDAO userDao;
     protected Film film1;
     protected Film film2;
     protected Film filmUpdate;
@@ -47,8 +47,8 @@ class FilmDaoDBImplTest {
     @BeforeEach
     void setUp() {
 
-        filmDao = new FilmDaoDBImpl(jdbcTemplate);
-        userDao = new UserDaoDBImpl(jdbcTemplate);
+        filmDao = new FilmDAOImpl(jdbcTemplate);
+        userDao = new UserDAOImpl(jdbcTemplate);
         film1 = Film.builder()
                 .name("nisi eiusmod")
                 .description("adipisicing")

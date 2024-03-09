@@ -17,7 +17,8 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Slf4j
-@RestControllerAdvice(assignableTypes = {FilmController.class,
+@RestControllerAdvice(assignableTypes = {DirectorController.class,
+        FilmController.class,
         UserController.class,
         GenreController.class,
         MpaController.class})

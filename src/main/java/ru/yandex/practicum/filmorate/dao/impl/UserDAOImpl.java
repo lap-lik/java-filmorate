@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.filmorate.dao.UserDao;
+import ru.yandex.practicum.filmorate.dao.UserDAO;
 import ru.yandex.practicum.filmorate.exception.SQLDataAccessException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -17,16 +17,12 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Repository(value = "userDB")
+@Repository
 @RequiredArgsConstructor
-public class UserDaoDBImpl implements UserDao {
+public class UserDAOImpl implements UserDAO {
     public static final String SAVE_USER = "INSERT INTO users (email, login, name, birthday) " +
             "VALUES (?, ?, ?, ?)";
     public static final String FIND_USERS = "SELECT u.*," +
-            "       (SELECT GROUP_CONCAT(CASE" +
-            "                                WHEN f.user_1 = u.id THEN f.user_2" +
-            "                                WHEN f.user_2 = u.id AND f.friendship_status = TRUE THEN f.user_1 END SEPARATOR ',')" +
-            "        FROM friendships f) AS friends_ids " +
             "FROM users u";
     public static final String FIND_USER_BY_ID = FIND_USERS + " WHERE u.id = ?";
     public static final String FIND_ALL_FRIENDS_BY_USER_ID = FIND_USERS + " WHERE u.id IN (SELECT (CASE" +
@@ -53,17 +49,6 @@ public class UserDaoDBImpl implements UserDao {
             "FROM users " +
             "WHERE id = ?";
     public static final String IS_EXIST_USER_BY_ID = "SELECT EXISTS (SELECT 1 FROM users WHERE id = ?)";
-    public static final String ADD_FRIEND = "INSERT INTO friendships (user_1, user_2) " +
-            "SELECT ?, ? " +
-            "FROM DUAL " +
-            "WHERE NOT EXISTS (SELECT 1 " +
-            "                  FROM friendships" +
-            "                  WHERE (user_1 = ? AND user_2 = ?) " +
-            "                     OR (user_1 = ? AND user_2 = ?))";
-    public static final String DELETE_FRIEND = "DELETE " +
-            "FROM friendships " +
-            "WHERE (user_1 = ? AND user_2 = ?) " +
-            "   OR (user_1 = ? AND user_2 = ?)";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -144,14 +129,6 @@ public class UserDaoDBImpl implements UserDao {
     }
 
     @Override
-    public boolean addFriend(Long userId, Long friendId) {
-
-        int addedFriend = jdbcTemplate.update(ADD_FRIEND, userId, friendId, userId, friendId, friendId, userId);
-
-        return addedFriend > 0;
-    }
-
-    @Override
     public List<User> findAllFriends(Long userId) {
 
         List<User> users = jdbcTemplate.query(FIND_ALL_FRIENDS_BY_USER_ID, this::mapRowToUser, userId, userId);
@@ -171,22 +148,7 @@ public class UserDaoDBImpl implements UserDao {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public boolean deleteFriend(Long userId, Long friendId) {
-
-        int friendDeleted = jdbcTemplate.update(DELETE_FRIEND, userId, friendId, friendId, userId);
-
-        return friendDeleted > 0;
-    }
-
     private User mapRowToUser(ResultSet resultSet, int rowNum) throws SQLException {
-
-        String arrayIds = resultSet.getString("friends_ids");
-        Set<Long> ids = new TreeSet<>();
-        if (arrayIds != null) {
-            String[] split = arrayIds.split(",");
-            ids.addAll(Arrays.stream(split).map(Long::valueOf).collect(Collectors.toList()));
-        }
 
         return User.builder()
                 .id(resultSet.getLong("id"))
@@ -194,7 +156,6 @@ public class UserDaoDBImpl implements UserDao {
                 .login(resultSet.getString("login"))
                 .name(resultSet.getString("name"))
                 .birthday(resultSet.getDate("birthday").toLocalDate())
-                .friends(new TreeSet<>(ids))
                 .build();
     }
 }
