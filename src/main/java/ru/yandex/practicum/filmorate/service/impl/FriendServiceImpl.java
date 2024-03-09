@@ -3,7 +3,7 @@ package ru.yandex.practicum.filmorate.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.dao.FriendDAO;
-import ru.yandex.practicum.filmorate.dao.UserDao;
+import ru.yandex.practicum.filmorate.dao.UserDAO;
 import ru.yandex.practicum.filmorate.exception.BadRequestException;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.service.FriendService;
@@ -18,7 +18,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RequiredArgsConstructor
 public class FriendServiceImpl implements FriendService {
     private final FriendDAO friendDAO;
-    private final UserDao userDao;
+    private final UserDAO userDao;
 
     @Override
     public void addFriend(Long userId, Long friendId) {

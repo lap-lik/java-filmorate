@@ -2,9 +2,9 @@ package ru.yandex.practicum.filmorate.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.dao.FilmDao;
+import ru.yandex.practicum.filmorate.dao.FilmDAO;
 import ru.yandex.practicum.filmorate.dao.LikeDAO;
-import ru.yandex.practicum.filmorate.dao.UserDao;
+import ru.yandex.practicum.filmorate.dao.UserDAO;
 import ru.yandex.practicum.filmorate.exception.BadRequestException;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.service.LikeService;
@@ -19,8 +19,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RequiredArgsConstructor
 public class LikeServiceImpl implements LikeService {
     private final LikeDAO likeDAO;
-    private final FilmDao filmDao;
-    private final UserDao userDao;
+    private final FilmDAO filmDao;
+    private final UserDAO userDao;
 
     @Override
     public void likeFilm(Long filmId, Long userId) {

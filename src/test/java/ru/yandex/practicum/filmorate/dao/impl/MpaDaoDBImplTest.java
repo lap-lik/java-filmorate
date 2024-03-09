@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
-import ru.yandex.practicum.filmorate.dao.MpaDao;
+import ru.yandex.practicum.filmorate.dao.MpaDAO;
 import ru.yandex.practicum.filmorate.exception.SQLDataAccessException;
 import ru.yandex.practicum.filmorate.model.Mpa;
 
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class MpaDaoDBImplTest {
     private final JdbcTemplate jdbcTemplate;
-    private MpaDao mpaDao;
+    private MpaDAO mpaDao;
     private Mpa mpa1;
     private Mpa mpa2;
     private Mpa mpaUpdate;
@@ -32,7 +32,7 @@ class MpaDaoDBImplTest {
     @BeforeEach
     void setUp() {
 
-        mpaDao = new MpaDaoDBImpl(jdbcTemplate);
+        mpaDao = new MpaDAOImpl(jdbcTemplate);
         mpa1 = Mpa.builder()
                 .id(1L)
                 .name("G")

@@ -33,7 +33,7 @@ public class DirectorServiceImpl implements DirectorService {
     @Override
     public List<DirectorDTO> getAll() {
 
-        return directorMapper.toListDTO(directorDAO.findAll());
+        return directorMapper.toDTOs(directorDAO.findAll());
     }
 
     @Override
@@ -41,7 +41,7 @@ public class DirectorServiceImpl implements DirectorService {
 
         ValidatorUtils.validate(directorDTO);
 
-        return directorMapper.toDTO(directorDAO.save(directorMapper.toModel(directorDTO)));
+        return directorMapper.toDTO(directorDAO.save(directorMapper.toEntity(directorDTO)));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class DirectorServiceImpl implements DirectorService {
 
         ValidatorUtils.validate(directorDTO, Marker.OnUpdate.class);
 
-        return directorMapper.toDTO(directorDAO.update(directorMapper.toModel(directorDTO))
+        return directorMapper.toDTO(directorDAO.update(directorMapper.toEntity(directorDTO))
                 .orElseThrow(() -> NotFoundException.builder()
                         .message(String.format("The director with the ID - `%d` was not found.", directorDTO.getId()))
                         .httpStatus(NOT_FOUND)

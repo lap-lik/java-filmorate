@@ -7,8 +7,7 @@ import ru.yandex.practicum.filmorate.model.Genre;
  * It extends the GenericDao interface with Genre as the entity type and Long as the identifier type.
  * This interface uses standard CRUD methods inherited from the parent class.
  *
- * @see GenericDao
+ * @see GenericDAO
  */
-public interface GenreDao extends GenericDao<Genre, Long> {
-
+public interface GenreDAO extends GenericDAO<Genre, Long> {
 }

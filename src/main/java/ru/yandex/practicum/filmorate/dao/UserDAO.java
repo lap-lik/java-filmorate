@@ -9,9 +9,9 @@ import java.util.List;
  * It extends the GenericDao interface with User as the entity type and Long as the identifier type.
  * The methods provided in this interface allow adding, retrieving, and deleting friends for a user.
  *
- * @see GenericDao
+ * @see GenericDAO
  */
-public interface UserDao extends GenericDao<User, Long> {
+public interface UserDAO extends GenericDAO<User, Long> {
 
     /**
      * Retrieves a list of all friends for a user with the specified user ID.

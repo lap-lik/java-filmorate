@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.yandex.practicum.filmorate.dao.UserDao;
+import ru.yandex.practicum.filmorate.dao.UserDAO;
 import ru.yandex.practicum.filmorate.exception.SQLDataAccessException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -19,14 +19,10 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class UserDaoDBImpl implements UserDao {
+public class UserDAOImpl implements UserDAO {
     public static final String SAVE_USER = "INSERT INTO users (email, login, name, birthday) " +
             "VALUES (?, ?, ?, ?)";
     public static final String FIND_USERS = "SELECT u.*," +
-            "       (SELECT GROUP_CONCAT(CASE" +
-            "                                WHEN f.user_1 = u.id THEN f.user_2" +
-            "                                WHEN f.user_2 = u.id AND f.friendship_status = TRUE THEN f.user_1 END SEPARATOR ',')" +
-            "        FROM friendships f) AS friends_ids " +
             "FROM users u";
     public static final String FIND_USER_BY_ID = FIND_USERS + " WHERE u.id = ?";
     public static final String FIND_ALL_FRIENDS_BY_USER_ID = FIND_USERS + " WHERE u.id IN (SELECT (CASE" +
@@ -154,20 +150,12 @@ public class UserDaoDBImpl implements UserDao {
 
     private User mapRowToUser(ResultSet resultSet, int rowNum) throws SQLException {
 
-        String arrayIds = resultSet.getString("friends_ids");
-        Set<Long> ids = new TreeSet<>();
-        if (arrayIds != null) {
-            String[] split = arrayIds.split(",");
-            ids.addAll(Arrays.stream(split).map(Long::valueOf).collect(Collectors.toList()));
-        }
-
         return User.builder()
                 .id(resultSet.getLong("id"))
                 .email(resultSet.getString("email"))
                 .login(resultSet.getString("login"))
                 .name(resultSet.getString("name"))
                 .birthday(resultSet.getDate("birthday").toLocalDate())
-                .friends(new TreeSet<>(ids))
                 .build();
     }
 }

@@ -10,10 +10,10 @@ import ru.yandex.practicum.filmorate.dao.LikeDAO;
 @RequiredArgsConstructor
 public class LikeDAOImpl implements LikeDAO {
 
-    public static final String ADD_LIKE = "INSERT INTO likes (film_id, user_id) " +
+    public static final String ADD_LIKE = "INSERT INTO films_users (film_id, user_id) " +
             "VALUES (?, ?)";
     public static final String DELETE_LIKE = "DELETE " +
-            "FROM likes " +
+            "FROM films_users " +
             "WHERE film_id = ? " +
             "  AND user_id = ?";
 

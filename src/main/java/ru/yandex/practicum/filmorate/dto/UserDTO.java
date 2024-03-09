@@ -32,6 +32,4 @@ public class UserDTO {
     @NotNull(message = "Birthday must not be null.")
     @PastOrPresent(message = "The date of birth cannot be in the future.")
     private LocalDate birthday;
-
-    private Set<Long> friends;
 }

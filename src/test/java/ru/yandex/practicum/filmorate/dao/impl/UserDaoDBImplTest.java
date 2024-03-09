@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
-import ru.yandex.practicum.filmorate.dao.UserDao;
+import ru.yandex.practicum.filmorate.dao.UserDAO;
 import ru.yandex.practicum.filmorate.exception.SQLDataAccessException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class UserDaoDBImplTest {
     private final JdbcTemplate jdbcTemplate;
-    private UserDao userDao;
+    private UserDAO userDao;
     private User user1;
     private User user2;
     private User user3;
@@ -34,7 +34,7 @@ class UserDaoDBImplTest {
     @BeforeEach
     void setUp() {
 
-        userDao = new UserDaoDBImpl(jdbcTemplate);
+        userDao = new UserDAOImpl(jdbcTemplate);
         user1 = User.builder()
                 .login("user-2")
                 .name("User-1 Name")

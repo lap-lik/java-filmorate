@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
-import ru.yandex.practicum.filmorate.dao.GenreDao;
+import ru.yandex.practicum.filmorate.dao.GenreDAO;
 import ru.yandex.practicum.filmorate.exception.SQLDataAccessException;
 import ru.yandex.practicum.filmorate.model.Genre;
 
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class GenreDaoDBImplTest {
     private final JdbcTemplate jdbcTemplate;
-    private GenreDao genreDao;
+    private GenreDAO genreDao;
     private Genre genre1;
     private Genre genre2;
 
@@ -34,7 +34,7 @@ class GenreDaoDBImplTest {
     @BeforeEach
     void setUp() {
 
-        genreDao = new GenreDaoDBImpl(jdbcTemplate);
+        genreDao = new GenreDAOImpl(jdbcTemplate);
         genre1 = Genre.builder()
                 .id(1L)
                 .name("Комедия")

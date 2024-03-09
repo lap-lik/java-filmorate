@@ -9,7 +9,7 @@ import java.util.Optional;
  * @param <T>  The entity type.
  * @param <ID> The identifier type.
  */
-public interface GenericDao<T, ID> {
+public interface GenericDAO<T, ID> {
 
     /**
      * Retrieves an entity by its identifier.

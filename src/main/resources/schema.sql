@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS likes;
-DROP TABLE IF EXISTS friendships;
-DROP TABLE IF EXISTS film_genre;
+DROP TABLE IF EXISTS films_users;
+DROP TABLE IF EXISTS films_genres;
 DROP TABLE IF EXISTS films_directors;
+DROP TABLE IF EXISTS friendships;
 DROP TABLE IF EXISTS directors;
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS users;
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS directors
     name varchar(100) not null
 );
 
-CREATE TABLE IF NOT EXISTS likes
+CREATE TABLE IF NOT EXISTS films_users
 (
     film_id INTEGER NOT NULL REFERENCES films (id) ON DELETE CASCADE,
     user_id INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS friendships
     PRIMARY KEY (user_1, user_2)
 );
 
-CREATE TABLE IF NOT EXISTS film_genre
+CREATE TABLE IF NOT EXISTS films_genres
 (
     film_id  INTEGER NOT NULL REFERENCES films (id) ON DELETE CASCADE,
     genre_id INTEGER NOT NULL REFERENCES genres (id) ON DELETE CASCADE,

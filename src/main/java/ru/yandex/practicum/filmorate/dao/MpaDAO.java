@@ -7,7 +7,7 @@ import ru.yandex.practicum.filmorate.model.Mpa;
  * It extends the GenericDAO interface by using Mpa as the entity type and Long as the identifier type.
  * This interface uses standard CRUD methods inherited from the parent class.
  *
- * @see GenericDao
+ * @see GenericDAO
  */
-public interface MpaDao extends GenericDao<Mpa, Long> {
+public interface MpaDAO extends GenericDAO<Mpa, Long> {
 }

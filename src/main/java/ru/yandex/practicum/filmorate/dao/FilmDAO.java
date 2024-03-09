@@ -9,9 +9,9 @@ import java.util.List;
  * It extends the GenericDao interface with Film as the entity type and Long as the identifier type.
  * The method provided in this interface allow  retrieving popular films.
  *
- * @see GenericDao
+ * @see GenericDAO
  */
-public interface FilmDao extends GenericDao<Film, Long> {
+public interface FilmDAO extends GenericDAO<Film, Long> {
 
     /**
      * Retrieves a list of popular films.

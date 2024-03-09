@@ -9,7 +9,7 @@ public interface LikeService {
      * Likes a film by the given film ID and user ID.
      *
      * @param filmId The ID of the film to be liked.
-     * @param userId The ID of the user who likes the film.
+     * @param userId The ID of the user who films_users the film.
      */
     void likeFilm(Long filmId, Long userId);
 
@@ -17,7 +17,7 @@ public interface LikeService {
      * Deletes a previously liked film by the given film ID and user ID.
      *
      * @param filmId The ID of the film to be unliked.
-     * @param userId The ID of the user who unlikes the film.
+     * @param userId The ID of the user who unfilms_users the film.
      */
     void deleteLike(Long filmId, Long userId);
 }
